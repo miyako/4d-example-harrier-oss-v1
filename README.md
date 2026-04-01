@@ -1,2 +1,1 @@
-# 4d-example-harrier-oss-v1
-Harrier OSS v1 in GGUF, ONNX
+## [microsoft/harrier-oss-v1-0.6b](https://huggingface.co/microsoft/harrier-oss-v1-0.6b)
