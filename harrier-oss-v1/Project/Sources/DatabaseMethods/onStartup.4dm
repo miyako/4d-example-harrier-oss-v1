@@ -1,18 +1,6 @@
-/*
-
-llama-server settings
-
-*/
-
-var $llama : cs:C1710.llama.llama
+var $ONNX : cs:C1710.ONNX.ONNX
 var $homeFolder : 4D:C1709.Folder
 var $huggingface : cs:C1710.event.huggingface
-
-/*
-
-callbacks for downloader (alert on error)
-
-*/
 
 var $event : cs:C1710.event.event
 $event:=cs:C1710.event.event.new()
@@ -28,50 +16,38 @@ var $folder : 4D:C1709.Folder
 var $path : Text
 var $URL : Text
 var $pooling : Text
+var $port : Integer
 
 /*
 
-model settings (llama.cpp)
+ONNX Runtime: 
 
-use Q8_0 quantisation
+use int8 quantisation
 
 */
 
-$homeFolder:=Folder:C1567(fk home folder:K87:24).folder(".GGUF")
+$homeFolder:=Folder:C1567(fk home folder:K87:24).folder(".ONNX")
+$port:=8081
+$options:={pooling: "last-token"}
 
-$folder:=$homeFolder.folder("harrier-oss-v1-0.6b")
-$path:="harrier-oss-v1-0.6b-Q8_0.gguf"
-$URL:="keisuke-miyako/harrier-oss-v1-0.6b-gguf-q8_0"
+/*
+important notice: onnx-genai caps context at 8192 to avoid swapping
+the onnx runtime flash attention uses more memory than gguf 
+here we use the same model for comparison with llama
+but you might want to use the 230m model with shorter vectors.
+*/
 
-var $logFile : 4D:C1709.File
-$logFile:=$folder.file("llama.log")
-$folder.create()
-If (Not:C34($logFile.exists))
-	$logFile.setContent(4D:C1709.Blob.new())
+If (False:C215)
+	$folder:=$homeFolder.folder("harrier-oss-v1-270m")
+	$path:="harrier-oss-v1-270m-onnx-int8"
+	$URL:="keisuke-miyako/harrier-oss-v1-270m-onnx-int8"
+Else 
+	$folder:=$homeFolder.folder("harrier-oss-v1-0.6b")
+	$path:="harrier-oss-v1-0.6b-onnx-int8"
+	$URL:="keisuke-miyako/harrier-oss-v1-0.6b-onnx-int8"
 End if 
-var $max_position_embeddings; $batch_size; $parallel; $threads; $batches : Integer
-$max_position_embeddings:=32768
-$batch_size:=$max_position_embeddings
-$batches:=2
-$threads:=8  // M1 Pro P-cores; don't derive this dynamically
 
-var $port : Integer
-$port:=8080
-$options:={\
-embeddings: True:C214; \
-pooling: "last"; \
-log_file: $logFile; \
-ctx_size: $max_position_embeddings; \
-batch_size: $batch_size; \
-ubatch_size: 2048; \
-parallel: $batches; \
-threads: $threads; \
-threads_batch: $threads; \
-threads_http: 2; \
-log_disable: False:C215; \
-n_gpu_layers: 0}
-
-$huggingface:=cs:C1710.event.huggingface.new($folder; $URL; $path)
+$huggingface:=cs:C1710.event.huggingface.new($folder; $URL; $path; "embedding"; ($URL="@-f16" || ($URL="@-f32")) ? "model.onnx" : "model_quantized.onnx")
 $huggingfaces:=cs:C1710.event.huggingfaces.new([$huggingface])
 
-$llama:=cs:C1710.llama.llama.new($port; $huggingfaces; $homeFolder; $options; $event)
+$ONNX:=cs:C1710.ONNX.ONNX.new($port; $huggingfaces; $homeFolder; $options; $event)

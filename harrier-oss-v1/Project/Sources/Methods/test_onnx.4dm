@@ -2,7 +2,7 @@
 var $AIClient : cs:C1710.AIKit.OpenAI
 $AIClient:=cs:C1710.AIKit.OpenAI.new()
 
-$AIClient.baseURL:="http://127.0.0.1:8080/v1"  // llama-server
+$AIClient.baseURL:="http://127.0.0.1:8081/v1"  // onnx-genai
 
 $query:="Instruct: Retrieve text that answers the question\nQuery: "+"What is the TCP port number used by 4D Server?"
 
