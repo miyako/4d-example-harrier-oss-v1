@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE base SYSTEM "http://www.4d.com/dtd/2007/base.dtd" >
+<base name="harrier-oss-v1" uuid="CE8E9483E258482FA9240D16582CE3F0" collation_locale="ja">
+	<schema name="DEFAULT_SCHEMA"/>
+	<table name="Documents" uuid="2029353C33894F3AB99D45258256E389" id="1">
+		<field name="ID" uuid="552405B9649D42CD9342B3D123BD830B" type="4" unique="true" autosequence="true" not_null="true" id="1"/>
+		<field name="Embeddings" uuid="F03AE674A3F54457BF244D4C8B2740D9" type="21" blob_switch_size="2147483647" id="2">
+			<field_extra class_id="4D.Vector"/>
+		</field>
+		<field name="Text" uuid="90CDFF95469D43DE8DBEE6514B051F13" type="10" id="3"/>
+		<field name="Path" uuid="8E68A217448D474BB1FCCC45BB617116" type="10" id="4"/>
+		<primary_key field_name="ID" field_uuid="552405B9649D42CD9342B3D123BD830B"/>
+	</table>
+	<index kind="regular" unique_keys="true" uuid="A1FDADA1F82A4C97A359A183D660931E" type="7">
+		<field_ref uuid="552405B9649D42CD9342B3D123BD830B" name="ID">
+			<table_ref uuid="2029353C33894F3AB99D45258256E389" name="Documents"/>
+		</field_ref>
+	</index>
+	<base_extra>
+		<journal_file journal_file_enabled="false"/>
+	</base_extra>
+</base>
