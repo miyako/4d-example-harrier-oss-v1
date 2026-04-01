@@ -28,10 +28,3 @@ End if
 ```
 
 <img width="480" height="542" alt="" src="https://github.com/user-attachments/assets/8172b78c-249e-4039-b904-755d251776b0" />
-
-## ONNX Runtime
-
-ONNX uses less CPU, more memory. Bug?
-
-<img width="833" height="384" alt="" src="https://github.com/user-attachments/assets/5e56dd0a-018a-4833-9b99-8b177988fc20" />
-
