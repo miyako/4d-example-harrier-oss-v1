@@ -1,6 +1,6 @@
 ## [microsoft/harrier-oss-v1-0.6b](https://huggingface.co/microsoft/harrier-oss-v1-0.6b)
 
-**Harrier OSS** is a decoder-only text embedding model released by **Microsoft* in 2026. 
+**Harrier OSS** is a decoder-only text embedding model released by **Microsoft** in 2026. 
 
 |`max_position_embeddings`|`hidden_size`|`num_hidden_layers`|`pooling`
 |-:|-:|-:|-:|
