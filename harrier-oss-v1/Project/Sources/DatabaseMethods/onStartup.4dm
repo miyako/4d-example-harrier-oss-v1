@@ -75,24 +75,3 @@ $huggingface:=cs:C1710.event.huggingface.new($folder; $URL; $path)
 $huggingfaces:=cs:C1710.event.huggingfaces.new([$huggingface])
 
 $llama:=cs:C1710.llama.llama.new($port; $huggingfaces; $homeFolder; $options; $event)
-
-/*
-
-ONNX Runtime: 
-
-use int8 quantisation
-
-*/
-
-$homeFolder:=Folder:C1567(fk home folder:K87:24).folder(".ONNX")
-$port:=8081
-$options:={pooling: "last-token"}
-
-$folder:=$homeFolder.folder("harrier-oss-v1-0.6b")
-$path:="harrier-oss-v1-0.6b-onnx-int8"
-$URL:="keisuke-miyako/harrier-oss-v1-0.6b-onnx-int8"
-
-$huggingface:=cs:C1710.event.huggingface.new($folder; $URL; $path; "embedding"; ($URL="@-f16" || ($URL="@-f32")) ? "model.onnx" : "model_quantized.onnx")
-$huggingfaces:=cs:C1710.event.huggingfaces.new([$huggingface])
-
-//$ONNX:=cs.ONNX.ONNX.new($port; $huggingfaces; $homeFolder; $options; $event)
