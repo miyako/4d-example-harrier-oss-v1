@@ -52,7 +52,7 @@ End if
 var $max_position_embeddings; $batch_size; $parallel; $threads; $batches : Integer
 $max_position_embeddings:=32768
 $batch_size:=$max_position_embeddings
-$batches:=2
+$batches:=1
 $threads:=8  // M1 Pro P-cores; don't derive this dynamically
 
 var $port : Integer
@@ -61,7 +61,7 @@ $options:={\
 embeddings: True:C214; \
 pooling: "last"; \
 log_file: $logFile; \
-ctx_size: $max_position_embeddings; \
+ctx_size: $max_position_embeddings*$batches; \
 batch_size: $batch_size; \
 ubatch_size: 2048; \
 parallel: $batches; \
